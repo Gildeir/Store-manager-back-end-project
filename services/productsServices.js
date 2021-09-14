@@ -44,6 +44,11 @@ const update = async (id, name, quantity) => {
   return up;
 };
 
+const deletedProduct = async (id) => {
+ const productToDelete = await productsModel.exclude(id);
+ return productToDelete;
+};
+
 module.exports = {
   createProdut,
   isValidName,
@@ -51,4 +56,5 @@ module.exports = {
   isValidQuantityInterget,
   getById,
   update,
+  deletedProduct,
 };

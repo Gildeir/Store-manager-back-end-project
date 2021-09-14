@@ -40,9 +40,14 @@ const exclude = async (id) => {
     return null;
   }
   const db = await connect();
+  const productToExlude = await db.collection('products').findOne({
+      _id: ObjectId(id),
+    });
+
   await db.collection('products').deleteOne({
     _id: ObjectId(id),
   });
+  return productToExlude;
 };
 
 module.exports = {
