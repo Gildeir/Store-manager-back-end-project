@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+/* const fs = require('fs').promises;
 const util = require('util');
 const { exec: callbackExec } = require('child_process');
 const path = require('path');
@@ -59,3 +59,4 @@ describe('13 - Escreva testes para seus controllers', () => {
     expect(coverageResults.total.lines.pct).toBeGreaterThanOrEqual(80);
   });
 });
+ */

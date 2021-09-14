@@ -14,6 +14,11 @@ const isValidQuantityInterget = (quantity) => {
   return true;
 };
 
+const getById = async (id) => {
+  const product = await productsModel.getById(id);
+  return product;
+};
+
 const createProdut = async (name, quantity) => {
   const productExists = await productsModel.productExists(name); 
   const isProductValidName = isValidName(name);
@@ -23,7 +28,7 @@ const createProdut = async (name, quantity) => {
   if (!isProductValidQuantityPositive) return false;
   if (!isProductValidQuantityInterger) return false;
   if (productExists) return null;
-  const productCreated = await productsModel.create(name, quantity);  
+  const productCreated = await productsModel.create(name, quantity); 
   return productCreated;
 };
 
@@ -33,5 +38,6 @@ module.exports = {
   isValidName,
   isValidQuantityPositive,
   isValidQuantityInterget,
+  getById,
   // update,
 };

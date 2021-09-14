@@ -1,4 +1,4 @@
-const frisby = require('frisby');
+/* const frisby = require('frisby');
 const { MongoClient } = require('mongodb');
 
 const mongoDbUrl = 'mongodb://localhost:27017';
@@ -193,7 +193,6 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 });
-
 describe('6 - Crie um endpoint para listar as vendas', () => {
   let connection;
   let db;
@@ -835,3 +834,4 @@ describe('10 - Valide a quantidade de produtos', () => {
       });
   });
 });
+ */

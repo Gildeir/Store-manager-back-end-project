@@ -14,8 +14,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.get('/products', productsController.getAll);
 app.get('/products/:id', productsController.getById);
+app.get('/products', productsController.getAll);
 app.post('/products', productsController.create);
 app.put('/products/:id', productsController.update);
 app.delete('/products/:id', productsController.remove);

@@ -15,15 +15,19 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  if (!ObjectId.isValid(id)) { return null; }
+  if (!ObjectId.isValid(id)) return null;
   const db = await connect();
   return db.collection('products').findOne(ObjectId(id));
 };
 
 const create = async (name, quantity) => {
   const db = await connect();
-  const product = await db.collection('products').insertOne({ name, quantity });
-  return { id: product.insertId, name, quantity };
+  const { insertedId } = await db.collection('products').insertOne({
+    name,
+    quantity,
+  });
+  console.log(insertedId);
+  return { _id: insertedId, name, quantity };
 };
 
 const update = async (id, name, quantity) => {
