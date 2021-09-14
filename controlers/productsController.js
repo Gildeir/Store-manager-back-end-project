@@ -1,20 +1,53 @@
 const productsModel = require('../models/productsModel');
-// const ProductsService = require('../services/ProductsServices');
+const productsService = require('../services/productsServices');
+
+const NAME_CHARACTER_LENGHT_ERROR = (res) => res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: '"name" length must be at least 5 characters long',
+        },
+      });
+
+const PRODUCT_ALREADY_EXISTS_ERROR = (res) => res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: 'Product already exists',
+        },
+      });
+
+const MUST_BE_POSITIVE_ERROR = (res) => res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: '"quantity" must be larger than or equal to 1',
+        },
+      });
+
+const MUST_BE_AN_INTERGER_ERROR = (res) => res.status(422).json({
+        err: {
+          code: 'invalid_data',
+          message: '"quantity" must be a number',
+        },
+      });
 
 const getAll = async (req, res) => {
   const products = await productsModel.getAll();
-  return res.json(products);
+  return res.json({ products });
 };
 const getById = async (req, res) => {
   const { id } = req.params;
   const products = await productsModel.getById(id);
-  return res.status(200).json(products);
+  return res.status(200).json({ products });
 };
+
 const create = async (req, res) => {
 const { name, quantity } = req.body;
-const newProduct = await productsModel.create(name, quantity);
-if (newProduct === null) return res.status(400).json({ message: 'Product alredy exists' }); 
-return res.status(200).json(newProduct);
+const newProduct = await productsService.createProdut(name, quantity);
+  if (!productsService.isValidName(name)) return NAME_CHARACTER_LENGHT_ERROR(res);
+  if (!productsService.isValidQuantityPositive(quantity)) return MUST_BE_POSITIVE_ERROR(res);
+  if (!productsService.isValidQuantityInterget(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
+  if (newProduct === null) return PRODUCT_ALREADY_EXISTS_ERROR(res);
+  
+  return res.status(201).json(newProduct);
 };
 const remove = async (req, res) => {
   const { id } = req.params;
@@ -22,7 +55,7 @@ const remove = async (req, res) => {
   return res.status(202).send();
 };
 const update = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params;  
     const { name, quantity } = req.body;
     const updateProduct = await productsModel.update(id, name, quantity);
     return res.status(200).json(updateProduct);

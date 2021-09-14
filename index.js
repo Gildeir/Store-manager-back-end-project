@@ -14,10 +14,10 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.get('/product', productsController.getAll);
-app.get('/product/:id', productsController.getById);
-app.post('/product', productsController.create);
-app.put('/product/:id', productsController.update);
-app.delete('/product/:id', productsController.remove);
+app.get('/products', productsController.getAll);
+app.get('/products/:id', productsController.getById);
+app.post('/products', productsController.create);
+app.put('/products/:id', productsController.update);
+app.delete('/products/:id', productsController.remove);
 
 app.listen(3000, () => console.log('Listening port 3000'));
