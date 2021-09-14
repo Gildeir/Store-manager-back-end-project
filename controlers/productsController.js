@@ -46,7 +46,6 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const { id } = req.params;
 
-  console.log();
   const products = await productsModel.getById(id);
   if (!products) return WRONG_ID_FORMAT(res);
   return res.status(200).json(products);
@@ -73,8 +72,12 @@ const remove = async (req, res) => {
 const update = async (req, res) => {
     const { id } = req.params;  
     const { name, quantity } = req.body;
-    const updateProduct = await productsModel.update(id, name, quantity);
-    return res.status(200).json(updateProduct);
+    const updateDProduct = await productsService.update(id, name, quantity);
+
+  if (!productsService.isValidName(name)) return NAME_CHARACTER_LENGHT_ERROR(res);
+  if (!productsService.isValidQuantityPositive(quantity)) return MUST_BE_POSITIVE_ERROR(res);
+  if (!productsService.isValidQuantityInterget(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
+    return res.status(200).json(updateDProduct);
 };
 
 module.exports = {

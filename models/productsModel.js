@@ -22,18 +22,17 @@ const getById = async (id) => {
 
 const create = async (name, quantity) => {
   const db = await connect();
-  const { insertedId } = await db.collection('products').insertOne({
-    name,
-    quantity,
-  });
+  const { insertedId } = await db.collection('products').insertOne({ name, quantity });
   console.log(insertedId);
   return { _id: insertedId, name, quantity };
 };
 
 const update = async (id, name, quantity) => {
   const db = await connect();
-  await db.collection('products').updateOne({ name, quantity });
-  return ({ _id: ObjectId(id) }, { $set: { name, quantity } });
+  await db.collection('products')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } });
+  const updatedProduct = await db.collection('products').findOne({ _id: ObjectId(id) });
+  return (updatedProduct);
 };
 
 const exclude = async (id) => {

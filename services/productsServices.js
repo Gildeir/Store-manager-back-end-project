@@ -32,12 +32,23 @@ const createProdut = async (name, quantity) => {
   return productCreated;
 };
 
-// const update = async({ id, name, quantity });
+const update = async (id, name, quantity) => {
+  const up = await productsModel.update(id, name, quantity);
+  const isProductValidName = isValidName(name);
+  const isProductValidQuantityPositive = isValidQuantityPositive(quantity);
+  const isProductValidQuantityInterger = isValidQuantityInterget(quantity);
+  if (!isProductValidName) return false;
+  if (!isProductValidQuantityPositive) return false;
+  if (!isProductValidQuantityInterger) return false;
+  if (!up) return null;
+  return up;
+};
+
 module.exports = {
   createProdut,
   isValidName,
   isValidQuantityPositive,
   isValidQuantityInterget,
   getById,
-  // update,
+  update,
 };
