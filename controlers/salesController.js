@@ -10,10 +10,16 @@ const INVALID_QUANTITY_ERROR = (res) => res.status(422).json({
 
 // error req 2
 
-const WRONG_ID_FORMAT = (res) => res.status(422).json({
+const WRONG_ID_FORMAT = (res) => res.status(404).json({
+  err: {
+    code: 'not_found',
+    message: 'Sale not found',
+  },
+});
+const WRONG_ID_FORMAT_DELET = (res) => res.status(422).json({
   err: {
     code: 'invalid_data',
-    message: 'Wrong id format',
+    message: 'Wrong sale ID format',
   },
 });
 
@@ -26,9 +32,9 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const products = await salesModel.getById(id);
-  if (!products) return WRONG_ID_FORMAT(res);
-  return res.status(200).json(products);
+  const sales = await salesModel.getById(id);
+  if (!sales) return WRONG_ID_FORMAT(res);
+  return res.status(200).json(sales);
 };
 
 const create = async (req, res) => {
@@ -43,16 +49,19 @@ return res.status(200).json(salesCreated);
 const remove = async (req, res) => {
   const { id } = req.params;
   const removed = await salesServices.deletedProduct(id);
-    if (!removed) return WRONG_ID_FORMAT(res);
+    if (!removed) return WRONG_ID_FORMAT_DELET(res);
   return res.status(200).json(removed);
 };
+
 const update = async (req, res) => {
     const { id } = req.params;
-    const { quantity } = req.body;
-    const updateDProduct = await salesServices.update(id, quantity);
-  if (!salesServices.isValidQuantityPositive(quantity)) return INVALID_QUANTITY_ERROR(res);
-  if (!salesServices.isValidQuantityInterget(quantity)) return INVALID_QUANTITY_ERROR(res);
-    return res.status(200).json(updateDProduct);
+    const saleData = req.body;
+    const { productId, quantity } = saleData[0];
+    console.log(productId);
+    if (!salesServices.isValidQuantityPositive(quantity)) return INVALID_QUANTITY_ERROR(res);
+    if (!salesServices.isValidQuantityInterget(quantity)) return INVALID_QUANTITY_ERROR(res);
+    const updatedSale = await salesServices.update(id, productId, quantity);
+    return res.status(200).json(updatedSale);
 };
 
 module.exports = {

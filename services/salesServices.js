@@ -15,8 +15,7 @@ const getById = async (id) => {
 };
 
 const createSale = async (completeSale) => {
-  const { productId, quantity } = completeSale[0];
-  console.log(productId, quantity);
+  const { quantity } = completeSale[0];
   const isSalesValidQuantityPositive = isValidQuantityPositive(quantity);
   const isSalesValidQuantityInterger = isValidQuantityInterget(quantity);
   if (!isSalesValidQuantityPositive) return false;
@@ -25,13 +24,13 @@ const createSale = async (completeSale) => {
     return salesCreated;
   };
 
-const update = async (id, quantity) => {
-  const up = await salesModel.update(id, quantity);
+const update = async (id, productId, quantity) => {
   const isSalesValidQuantityPositive = isValidQuantityPositive(quantity);
   const isSalesValidQuantityInterger = isValidQuantityInterget(quantity);
   if (!isSalesValidQuantityPositive) return false;
   if (!isSalesValidQuantityInterger) return false;
-  if (!up) return null;
+  const up = await salesModel.update(id, productId, quantity);
+  // if (!up) return null;
   return up;
 };
 
