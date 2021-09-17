@@ -23,7 +23,6 @@ const getById = async (id) => {
 const create = async (name, quantity) => {
   const db = await connect();
   const { insertedId } = await db.collection('products').insertOne({ name, quantity });
-  console.log(insertedId);
   return { _id: insertedId, name, quantity };
 };
 

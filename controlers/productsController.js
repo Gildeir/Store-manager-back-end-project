@@ -53,12 +53,10 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
 const { name, quantity } = req.body;
-// const { id } = req.params;
-
 const newProduct = await productsService.createProdut(name, quantity);
   if (!productsService.isValidName(name)) return NAME_CHARACTER_LENGHT_ERROR(res);
   if (!productsService.isValidQuantityPositive(quantity)) return MUST_BE_POSITIVE_ERROR(res);
-  if (!productsService.isValidQuantityInterget(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
+  if (!productsService.isValidQuantityInterger(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
   if (newProduct === null) return PRODUCT_ALREADY_EXISTS_ERROR(res);  
   return res.status(201).json(newProduct);
 };
@@ -75,7 +73,7 @@ const update = async (req, res) => {
     const updateDProduct = await productsService.update(id, name, quantity);
   if (!productsService.isValidName(name)) return NAME_CHARACTER_LENGHT_ERROR(res);
   if (!productsService.isValidQuantityPositive(quantity)) return MUST_BE_POSITIVE_ERROR(res);
-  if (!productsService.isValidQuantityInterget(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
+  if (!productsService.isValidQuantityInterger(quantity)) return MUST_BE_AN_INTERGER_ERROR(res);
     return res.status(200).json(updateDProduct);
 };
 

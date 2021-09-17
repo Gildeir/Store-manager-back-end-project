@@ -9,7 +9,7 @@ const isValidQuantityPositive = (quantity) => {
   if (quantity <= 0) return false;
   return true;
 };
-const isValidQuantityInterget = (quantity) => {
+const isValidQuantityInterger = (quantity) => {
   if (!Number.isInteger(quantity)) return false;
   return true;
 };
@@ -23,7 +23,7 @@ const createProdut = async (name, quantity) => {
   const productExists = await productsModel.productExists(name); 
   const isProductValidName = isValidName(name);
   const isProductValidQuantityPositive = isValidQuantityPositive(quantity);
-  const isProductValidQuantityInterger = isValidQuantityInterget(quantity);
+  const isProductValidQuantityInterger = isValidQuantityInterger(quantity);
   if (!isProductValidName) return false;
   if (!isProductValidQuantityPositive) return false;
   if (!isProductValidQuantityInterger) return false;
@@ -36,7 +36,7 @@ const update = async (id, name, quantity) => {
   const up = await productsModel.update(id, name, quantity);
   const isProductValidName = isValidName(name);
   const isProductValidQuantityPositive = isValidQuantityPositive(quantity);
-  const isProductValidQuantityInterger = isValidQuantityInterget(quantity);
+  const isProductValidQuantityInterger = isValidQuantityInterger(quantity);
   if (!isProductValidName) return false;
   if (!isProductValidQuantityPositive) return false;
   if (!isProductValidQuantityInterger) return false;
@@ -53,7 +53,7 @@ module.exports = {
   createProdut,
   isValidName,
   isValidQuantityPositive,
-  isValidQuantityInterget,
+  isValidQuantityInterger,
   getById,
   update,
   deletedProduct,
