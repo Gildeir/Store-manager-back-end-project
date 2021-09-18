@@ -19,15 +19,24 @@ const getById = async (id) => {
   return db.collection('sales').findOne(ObjectId(id));
 };
 
-const update = async (id, productId, quantity) => {
+const update = async (_id, productId, quantity) => {
   const db = await connect();
-  await db.collection('sales')
-    .updateOne({
-      _id: ObjectId(id),
-    }, { $set: { productId, quantity } });
+  console.log(quantity);
+  await db.collection('sales').updateOne({ _id: ObjectId(_id) },
+   {
+     $set: {
+       _id: ObjectId(_id),
+       itensSold: [{
+             productId,
+             quantity,
+           },
+       ],
+     },
+   });
   const updatedProduct = await db.collection('sales').findOne({
-    _id: ObjectId(id),
+    _id: ObjectId(_id),
   });
+  console.log(updatedProduct);
   return (updatedProduct);
 };
 

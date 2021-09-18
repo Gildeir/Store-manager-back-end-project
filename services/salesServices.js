@@ -29,8 +29,8 @@ const update = async (id, productId, quantity) => {
   const isSalesValidQuantityInterger = isValidQuantityInterget(quantity);
   if (!isSalesValidQuantityPositive) return false;
   if (!isSalesValidQuantityInterger) return false;
-  const up = await salesModel.update(id, productId, quantity);
   // if (!up) return null;
+  const up = await salesModel.update(id, productId, quantity);
   return up;
 };
 

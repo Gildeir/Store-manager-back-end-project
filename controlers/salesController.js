@@ -60,7 +60,6 @@ const update = async (req, res) => {
     if (!salesServices.isValidQuantityPositive(quantity)) return INVALID_QUANTITY_ERROR(res);
     if (!salesServices.isValidQuantityInterget(quantity)) return INVALID_QUANTITY_ERROR(res);
     const updatedSale = await salesServices.update(id, productId, quantity);
-    console.log(updatedSale);
     return res.status(200).json(updatedSale);
 };
 
